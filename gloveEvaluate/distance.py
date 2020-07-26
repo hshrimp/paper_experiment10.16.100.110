@@ -2,6 +2,7 @@ import argparse
 import numpy as np
 import sys
 
+
 def generate():
     parser = argparse.ArgumentParser()
     parser.add_argument('--vocab_file', default='/home/wshong/Desktop/final vector/vocab.txt', type=str)
@@ -15,7 +16,6 @@ def generate():
         for line in f:
             vals = line.rstrip().split(' ')
             vectors[vals[0]] = [float(x) for x in vals[1:]]
-
 
     vocab_size = len(words)
     vocab = {w: idx for idx, w in enumerate(words)}
@@ -40,18 +40,19 @@ def distance(W, vocab, ivocab, input_term):
         if term in vocab:
             print('Word: %s  Position in vocabulary: %i' % (term, vocab[term]))
             if idx == 0:
-                #print 'W[vocab[term], :]=',W[vocab[term], :]
+                # print 'W[vocab[term], :]=',W[vocab[term], :]
                 vec_result = np.copy(W[vocab[term], :])
             else:
-                #print 'W[vocab[term], :]=', W[vocab[term], :]
+                # print 'W[vocab[term], :]=', W[vocab[term], :]
                 vec_result += W[vocab[term], :]
-                print 'result=',vec_result
+                print
+                'result=', vec_result
         else:
             print('Word: %s  Out of dictionary!\n' % term)
             return
-    
+
     vec_norm = np.zeros(vec_result.shape)
-    d = (np.sum(vec_result ** 2,) ** (0.5))
+    d = (np.sum(vec_result ** 2, ) ** (0.5))
     vec_norm = (vec_result.T / d).T
 
     dist = np.dot(W, vec_norm.T)
@@ -69,7 +70,7 @@ def distance(W, vocab, ivocab, input_term):
 
 
 if __name__ == "__main__":
-    N = 10;          # number of closest words that will be shown
+    N = 10;  # number of closest words that will be shown
     W, vocab, ivocab = generate()
     while True:
         input_term = raw_input("\nEnter word or sentence (EXIT to break): ")
@@ -77,4 +78,3 @@ if __name__ == "__main__":
             break
         else:
             distance(W, vocab, ivocab, input_term)
-

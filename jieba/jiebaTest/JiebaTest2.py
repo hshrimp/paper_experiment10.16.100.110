@@ -26,7 +26,7 @@ from optparse import OptionParser
 #     topK = int(opt.topK)
 
 content = open('userdict.txt', 'rb').read()
-print(' content=',content)
+print(' content=', content)
 tags = jieba.analyse.extract_tags(content, topK=2)
 
 print ",".join(tags)

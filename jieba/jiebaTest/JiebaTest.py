@@ -1,7 +1,9 @@
-#encoding=utf-8
+# encoding=utf-8
 import sys
+
 sys.path.append("../")
 import jieba
+
 jieba.load_userdict("/home/wshong/PycharmProjects/jieba/userdict.txt")
 import jieba.posseg as pseg
 

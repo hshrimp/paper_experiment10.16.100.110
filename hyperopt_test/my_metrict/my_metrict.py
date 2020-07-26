@@ -3,6 +3,7 @@ from keras.callbacks import Callback
 from sklearn.metrics import confusion_matrix, f1_score, precision_score, recall_score
 from keras import backend as K
 
+
 def precision(y_true, y_pred):
     '''
     K.clip(y_true * y_pred, 0, 1)将小于0的变0,大于1 的变1
@@ -18,11 +19,13 @@ def precision(y_true, y_pred):
     precision = true_positives / (predicted_positives + K.epsilon())
     return precision
 
+
 def recall(y_true, y_pred):
     true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
     possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
     recall = true_positives / (possible_positives + K.epsilon())
     return recall
+
 
 def fbeta_score(y_true, y_pred, beta=1):
     if beta < 0:
@@ -38,10 +41,13 @@ def fbeta_score(y_true, y_pred, beta=1):
     fbeta_score = (1 + bb) * (p * r) / (bb * p + r + K.epsilon())
     return fbeta_score
 
+
 '''
 precision2\recall2\fbeta_score2 is design for binary classification ,and its final is 
 activation by 'softmax',the input y_true and y_pred's shape is like (?,2)
 '''
+
+
 def precision2(y_true, y_pred):
     '''
     K.clip(y_true * y_pred, 0, 1)将小于0的变0,大于1 的变1
@@ -52,20 +58,22 @@ def precision2(y_true, y_pred):
     :param y_pred:
     :return:
     '''
-    y_true=K.argmax(y_true,axis=1)
-    y_pred=K.argmax(y_pred,axis=1)
+    y_true = K.argmax(y_true, axis=1)
+    y_pred = K.argmax(y_pred, axis=1)
     true_positives = K.sum(y_true * y_pred)
     predicted_positives = K.sum(y_pred)
-    precision = K.cast(true_positives,'float32') / (K.cast(predicted_positives,'float32') + K.epsilon())
+    precision = K.cast(true_positives, 'float32') / (K.cast(predicted_positives, 'float32') + K.epsilon())
     return precision
+
 
 def recall2(y_true, y_pred):
     y_true = K.argmax(y_true, axis=1)
     y_pred = K.argmax(y_pred, axis=1)
     true_positives = K.sum(y_true * y_pred)
     possible_positives = K.sum(y_true)
-    recall = K.cast(true_positives,'float32') / (K.cast(possible_positives,'float32') + K.epsilon())
+    recall = K.cast(true_positives, 'float32') / (K.cast(possible_positives, 'float32') + K.epsilon())
     return recall
+
 
 def fbeta_score2(y_true, y_pred, beta=1):
     if beta < 0:
@@ -131,9 +139,9 @@ def fbeta_score2(y_true, y_pred, beta=1):
 #         return
 
 
-#metrics = Metrics()
-#on_train_begin is initialized at the beginning of the training.Here we initiate 3 lists to hold the values
+# metrics = Metrics()
+# on_train_begin is initialized at the beginning of the training.Here we initiate 3 lists to hold the values
 # of the interested quantities, which are computed in on_epoch_end.Later on, we can access these lists as usual instance variables,
 # for example:
 
-#print(metrics.val_f1s)
+# print(metrics.val_f1s)
